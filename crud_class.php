@@ -9,7 +9,7 @@ class crud_class
     private $database;
     public $conn;
 
-    public function __construct($host = "localhost", $username = "root", $password = "", $database = "fnf_api")
+    public function __construct($host = "localhost", $username = "root", $password = "", $database = "finance_api")
     {
         $this->host = $host;
         $this->username = $username;

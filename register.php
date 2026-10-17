@@ -2,7 +2,7 @@
 include 'connection.php';
 $data = json_decode(file_get_contents("php://input"), true);
 
-$data['password']=sha1($data['password']);
+$data['password']=sha1(trim($data['password']));
 if($data){
 	if($data['name'] && $data['email'] && $data['password']){
 		
