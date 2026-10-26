@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 26, 2026 at 04:33 AM
+-- Generation Time: Oct 26, 2026 at 04:55 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -128,7 +128,7 @@ CREATE TABLE `loans` (
 --
 
 INSERT INTO `loans` (`id`, `member_id`, `borrower_name`, `borrower_phone`, `principal`, `interest_rate`, `loan_date`, `due_date`, `note`, `created_at`, `updated_at`, `deleted_at`, `duration_months`, `repayment_type`, `penalty_rate`) VALUES
-(1, NULL, 'kamal', '01880997983', 2000.00, 0.12, '2026-10-24', NULL, '', '2026-10-24 20:34:06', NULL, NULL, NULL, NULL, NULL),
+(1, NULL, 'kamal', '01880997983', 2000.00, 0.12, '2026-10-24', NULL, '', '2026-10-24 20:34:06', NULL, '2026-10-26 09:47:47', NULL, NULL, NULL),
 (2, 5, 'baker', '01389098008', 5000.00, 20.00, '2026-10-25', '2027-07-25', '', '2026-10-25 21:13:12', NULL, '2026-10-25 21:16:00', 9, 'half_monthly', 15.00),
 (3, 6, 'hossan', '01936778899', 5000.00, 12.00, '2026-10-25', '2027-03-25', '', '2026-10-25 21:17:03', NULL, NULL, 5, 'half_monthly', 15.00);
 
