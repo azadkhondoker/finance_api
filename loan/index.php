@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Asia/Dhaka');
 include '../connection.php';
 include '../auth_check.php';
 
@@ -14,9 +15,19 @@ $result = $cc->common_query(
      ORDER BY l.loan_date DESC, l.id DESC"
 );
 
+// Kon loan-e koyta kisti dewar shomoy ses hoye geche (Out of Time)
+$today = date('Y-m-d');
+$overdue = [];
+$o = $cc->common_query("SELECT loan_id, COUNT(*) AS c FROM loan_installments
+    WHERE deleted_at IS NULL AND status = 'unpaid' AND due_date < '$today' GROUP BY loan_id");
+foreach ($o['data'] as $r) {
+    $overdue[$r->loan_id] = (int) $r->c;
+}
+
 $outstanding = 0;
 $interest = 0;
 foreach ($result['data'] as $row) {
+    $row->overdue_count = isset($overdue[$row->id]) ? $overdue[$row->id] : 0;
     $row->outstanding = (float) $row->principal - (float) $row->paid_principal;
     $row->status = $row->outstanding <= 0 ? 'closed' : 'active';
     $outstanding += $row->outstanding;
