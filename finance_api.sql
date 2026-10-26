@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 25, 2026 at 05:31 AM
+-- Generation Time: Oct 26, 2026 at 04:33 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -117,15 +117,76 @@ CREATE TABLE `loans` (
   `note` varchar(255) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL
+  `deleted_at` datetime DEFAULT NULL,
+  `duration_months` int(10) UNSIGNED DEFAULT NULL,
+  `repayment_type` varchar(15) DEFAULT NULL,
+  `penalty_rate` decimal(6,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `loans`
 --
 
-INSERT INTO `loans` (`id`, `member_id`, `borrower_name`, `borrower_phone`, `principal`, `interest_rate`, `loan_date`, `due_date`, `note`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, NULL, 'kamal', '01880997983', 2000.00, 0.12, '2026-10-24', NULL, '', '2026-10-24 20:34:06', NULL, NULL);
+INSERT INTO `loans` (`id`, `member_id`, `borrower_name`, `borrower_phone`, `principal`, `interest_rate`, `loan_date`, `due_date`, `note`, `created_at`, `updated_at`, `deleted_at`, `duration_months`, `repayment_type`, `penalty_rate`) VALUES
+(1, NULL, 'kamal', '01880997983', 2000.00, 0.12, '2026-10-24', NULL, '', '2026-10-24 20:34:06', NULL, NULL, NULL, NULL, NULL),
+(2, 5, 'baker', '01389098008', 5000.00, 20.00, '2026-10-25', '2027-07-25', '', '2026-10-25 21:13:12', NULL, '2026-10-25 21:16:00', 9, 'half_monthly', 15.00),
+(3, 6, 'hossan', '01936778899', 5000.00, 12.00, '2026-10-25', '2027-03-25', '', '2026-10-25 21:17:03', NULL, NULL, 5, 'half_monthly', 15.00);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `loan_installments`
+--
+
+CREATE TABLE `loan_installments` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `loan_id` int(10) UNSIGNED NOT NULL,
+  `installment_no` int(10) UNSIGNED NOT NULL,
+  `due_date` date NOT NULL,
+  `principal_part` decimal(12,2) NOT NULL,
+  `interest_part` decimal(12,2) NOT NULL,
+  `status` varchar(10) NOT NULL DEFAULT 'unpaid',
+  `paid_date` date DEFAULT NULL,
+  `penalty_paid` decimal(12,2) NOT NULL DEFAULT 0.00,
+  `payment_id` int(10) UNSIGNED DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `loan_installments`
+--
+
+INSERT INTO `loan_installments` (`id`, `loan_id`, `installment_no`, `due_date`, `principal_part`, `interest_part`, `status`, `paid_date`, `penalty_paid`, `payment_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 2, 1, '2026-11-09', 277.78, 41.67, 'paid', '2026-10-25', 0.00, 3, '2026-10-25 21:13:12', '2026-10-25 21:14:05', NULL),
+(2, 2, 2, '2026-11-25', 277.78, 41.67, 'unpaid', NULL, 0.00, NULL, '2026-10-25 21:13:12', NULL, NULL),
+(3, 2, 3, '2026-12-10', 277.78, 41.67, 'unpaid', NULL, 0.00, NULL, '2026-10-25 21:13:12', NULL, NULL),
+(4, 2, 4, '2026-12-25', 277.78, 41.67, 'unpaid', NULL, 0.00, NULL, '2026-10-25 21:13:12', NULL, NULL),
+(5, 2, 5, '2027-01-09', 277.78, 41.67, 'unpaid', NULL, 0.00, NULL, '2026-10-25 21:13:12', NULL, NULL),
+(6, 2, 6, '2027-01-25', 277.78, 41.67, 'unpaid', NULL, 0.00, NULL, '2026-10-25 21:13:12', NULL, NULL),
+(7, 2, 7, '2027-02-09', 277.78, 41.67, 'unpaid', NULL, 0.00, NULL, '2026-10-25 21:13:12', NULL, NULL),
+(8, 2, 8, '2027-02-25', 277.78, 41.67, 'unpaid', NULL, 0.00, NULL, '2026-10-25 21:13:12', NULL, NULL),
+(9, 2, 9, '2027-03-12', 277.78, 41.67, 'unpaid', NULL, 0.00, NULL, '2026-10-25 21:13:12', NULL, NULL),
+(10, 2, 10, '2027-03-25', 277.78, 41.67, 'unpaid', NULL, 0.00, NULL, '2026-10-25 21:13:12', NULL, NULL),
+(11, 2, 11, '2027-04-09', 277.78, 41.67, 'unpaid', NULL, 0.00, NULL, '2026-10-25 21:13:12', NULL, NULL),
+(12, 2, 12, '2027-04-25', 277.78, 41.67, 'unpaid', NULL, 0.00, NULL, '2026-10-25 21:13:12', NULL, NULL),
+(13, 2, 13, '2027-05-10', 277.78, 41.67, 'unpaid', NULL, 0.00, NULL, '2026-10-25 21:13:12', NULL, NULL),
+(14, 2, 14, '2027-05-25', 277.78, 41.67, 'unpaid', NULL, 0.00, NULL, '2026-10-25 21:13:12', NULL, NULL),
+(15, 2, 15, '2027-06-09', 277.78, 41.67, 'unpaid', NULL, 0.00, NULL, '2026-10-25 21:13:12', NULL, NULL),
+(16, 2, 16, '2027-06-25', 277.78, 41.67, 'unpaid', NULL, 0.00, NULL, '2026-10-25 21:13:12', NULL, NULL),
+(17, 2, 17, '2027-07-10', 277.78, 41.67, 'unpaid', NULL, 0.00, NULL, '2026-10-25 21:13:12', NULL, NULL),
+(18, 2, 18, '2027-07-25', 277.74, 41.61, 'unpaid', NULL, 0.00, NULL, '2026-10-25 21:13:12', NULL, NULL),
+(19, 3, 1, '2026-11-09', 500.00, 25.00, 'paid', '2026-10-25', 0.00, 4, '2026-10-25 21:17:03', '2026-10-25 21:20:41', NULL),
+(20, 3, 2, '2026-11-25', 500.00, 25.00, 'unpaid', NULL, 0.00, NULL, '2026-10-25 21:17:03', NULL, NULL),
+(21, 3, 3, '2026-12-10', 500.00, 25.00, 'unpaid', NULL, 0.00, NULL, '2026-10-25 21:17:03', NULL, NULL),
+(22, 3, 4, '2026-12-25', 500.00, 25.00, 'unpaid', NULL, 0.00, NULL, '2026-10-25 21:17:03', NULL, NULL),
+(23, 3, 5, '2027-01-09', 500.00, 25.00, 'unpaid', NULL, 0.00, NULL, '2026-10-25 21:17:03', NULL, NULL),
+(24, 3, 6, '2027-01-25', 500.00, 25.00, 'unpaid', NULL, 0.00, NULL, '2026-10-25 21:17:03', NULL, NULL),
+(25, 3, 7, '2027-02-09', 500.00, 25.00, 'unpaid', NULL, 0.00, NULL, '2026-10-25 21:17:03', NULL, NULL),
+(26, 3, 8, '2027-02-25', 500.00, 25.00, 'unpaid', NULL, 0.00, NULL, '2026-10-25 21:17:03', NULL, NULL),
+(27, 3, 9, '2027-03-12', 500.00, 25.00, 'unpaid', NULL, 0.00, NULL, '2026-10-25 21:17:03', NULL, NULL),
+(28, 3, 10, '2027-03-25', 500.00, 25.00, 'unpaid', NULL, 0.00, NULL, '2026-10-25 21:17:03', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -142,16 +203,19 @@ CREATE TABLE `loan_payments` (
   `note` varchar(255) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL
+  `deleted_at` datetime DEFAULT NULL,
+  `installment_id` int(10) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `loan_payments`
 --
 
-INSERT INTO `loan_payments` (`id`, `loan_id`, `principal_amount`, `interest_amount`, `payment_date`, `note`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, 200.00, 0.11, '2026-10-24', '', '2026-10-24 20:35:29', NULL, NULL),
-(2, 1, 200.00, 20.00, '2026-10-25', '', '2026-10-25 09:31:38', NULL, NULL);
+INSERT INTO `loan_payments` (`id`, `loan_id`, `principal_amount`, `interest_amount`, `payment_date`, `note`, `created_at`, `updated_at`, `deleted_at`, `installment_id`) VALUES
+(1, 1, 200.00, 0.11, '2026-10-24', '', '2026-10-24 20:35:29', NULL, NULL, NULL),
+(2, 1, 200.00, 20.00, '2026-10-25', '', '2026-10-25 09:31:38', NULL, NULL, NULL),
+(3, 2, 277.78, 41.67, '2026-10-25', 'Installment #1', '2026-10-25 21:14:05', NULL, NULL, 1),
+(4, 3, 500.00, 25.00, '2026-10-25', 'Installment #1', '2026-10-25 21:20:41', NULL, NULL, 19);
 
 -- --------------------------------------------------------
 
@@ -266,6 +330,13 @@ ALTER TABLE `loans`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `loan_installments`
+--
+ALTER TABLE `loan_installments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_installments_loan` (`loan_id`);
+
+--
 -- Indexes for table `loan_payments`
 --
 ALTER TABLE `loan_payments`
@@ -317,13 +388,19 @@ ALTER TABLE `expenses`
 -- AUTO_INCREMENT for table `loans`
 --
 ALTER TABLE `loans`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `loan_installments`
+--
+ALTER TABLE `loan_installments`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `loan_payments`
 --
 ALTER TABLE `loan_payments`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `members`
